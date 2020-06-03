@@ -15,7 +15,7 @@ except ImportError:  # pragma no cover
     except ImportError:
         from io import StringIO
 
-from collections import OrderedDict
+import ordereddict
 from inspect import isgenerator
 
 try:  # pragma no cover
@@ -46,7 +46,7 @@ class _DictSAXHandler(object):
                  force_cdata=False,
                  cdata_separator='',
                  postprocessor=None,
-                 dict_constructor=OrderedDict,
+                 dict_constructor=ordereddict.OrderedDict,
                  strip_whitespace=True,
                  namespace_separator=':',
                  namespaces=None,
@@ -68,7 +68,7 @@ class _DictSAXHandler(object):
         self.strip_whitespace = strip_whitespace
         self.namespace_separator = namespace_separator
         self.namespaces = namespaces
-        self.namespace_declarations = OrderedDict()
+        self.namespace_declarations = ordereddict.OrderedDict()
         self.force_list = force_list
         self.comment_key = comment_key
 
@@ -369,7 +369,7 @@ def parse(xml_input, encoding=None, expat=expat, process_namespaces=False,
     elif isgenerator(xml_input):
         for chunk in xml_input:
             parser.Parse(chunk,False)
-        parser.Parse(b'',True)
+        parser.Parse('',True)
     else:
         parser.Parse(xml_input, True)
     return handler.item
